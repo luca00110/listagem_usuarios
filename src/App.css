@@ -1,0 +1,131 @@
+/* =========================================================
+   ESTILO PARA O APP.JSX ORIGINAL (SEM MUDAR O CÓDIGO JSX)
+   ========================================================= */
+
+/* Reset global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fundo da página e centralização */
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #334155;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1rem;
+}
+
+/* Container principal (a div raiz do App) */
+#root > div,
+body > div {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  padding: 2.25rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08),
+              0 8px 10px -6px rgba(15, 23, 42, 0.04);
+}
+
+/* Título */
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* Campo de busca (input) */
+input[type='text'] {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background-color: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.2s ease;
+  margin-bottom: 1.25rem;
+}
+
+input[type='text']::placeholder {
+  color: #94a3b8;
+}
+
+input[type='text']:focus {
+  background-color: #ffffff;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+/* Parágrafos gerais (mensagens de contagem, aviso, erro) */
+p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+/* Lista de usuários */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Esconde as tags <hr> e <br> originais para transformar em cards limpos */
+ul li hr,
+ul li br {
+  display: none;
+}
+
+/* Card de cada usuário (li) */
+ul li {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Avatar decorativo em gradiente gerado via CSS */
+ul li::before {
+  content: '';
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  margin-right: 0.85rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3);
+}
+
+/* Efeito ao passar o mouse no card */
+ul li:hover {
+  transform: translateY(-2px);
+  border-color: #c7d2fe;
+  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.1);
+}
+
+/* Nome do usuário */
+ul li strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+}
