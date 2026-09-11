@@ -4,6 +4,11 @@ import './App.css';
 import HeaderComponent from './components/HeaderComponent';
 import LoadingComponent from './components/LoadingComponent';
 import UserListComponent from './components/UserListComponent';
+import UserDetailsComponent from './components/UserDetailsComponent';
+import UseForm from './components/UseForm';
+import ModalComponent from './components/ModalComponent';
+import SuccessMessageComponent from './components/SuccessMessageComponent';
+import ErrorMessageComponent from './components/ErrorMessageComponent';
 
 const filtrarUsuariosPorTermo = (termo) => (usuario) => {
   const termoLower = termo.toLowerCase();
@@ -21,8 +26,25 @@ function App() {
   const [erro, setErro] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState('');
+  const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
+  const [mensagemModal, setMensagemModal] = useState(null);
+
+  
 
   const usuariosFiltrados = usuarios.filter(filtrarUsuariosPorTermo(busca));
+
+  async function buscarUsuarioPorId(id) {
+    try {
+      const resposta = await axios.get(
+        `${url}/users/${id}`
+      )
+      const data = resposta.data
+      setUsuarioSelecionado(data)
+      
+    } catch (error) {
+      console.log("Erro ao buscar usuários por ID", error);
+    }
+  }
 
   async function buscarUsuarios() {
     try {
@@ -36,6 +58,37 @@ function App() {
       setCarregando(false);
     }
   }
+
+  function limparUsuarioSelecionado() {
+    setUsuarioSelecionado(null);
+  }
+
+  async function cadastrarUsuario(user) {
+    try{
+      const resposta = await axios.post(
+        `${url}/users`, user
+      )
+      const data = resposta.data
+      setMensagemModal({
+        tipo: 'sucesso',
+        usuario: data,
+      });
+    } catch (error) {
+      console.log("Erro ao cadastrar usuário", error)
+      setMensagemModal({
+        tipo: 'erro',
+        mensagem: `Não foi possível cadastrar o usuário. Código: ${error.message}`,
+      });
+    }
+  }
+
+  function fecharMensagemModal() {
+    setMensagemModal(null);
+  }
+    
+  
+
+
 
   useEffect(() => {
     buscarUsuarios();
@@ -67,9 +120,31 @@ function App() {
         <p className="error-message">{erro}</p>
       )}
 
+      {usuarioSelecionado && (
+        <UserDetailsComponent 
+        usuario={usuarioSelecionado}
+        onFecharDetalhes={ limparUsuarioSelecionado}
+         />
+      )}
+
+      <UseForm onCadastrar={cadastrarUsuario}/>
+
+      {mensagemModal && (
+        <ModalComponent onFechar={fecharMensagemModal}>
+          {mensagemModal.tipo === 'sucesso' ? (
+            <SuccessMessageComponent usuario={mensagemModal.usuario} />
+          ) : (
+            <ErrorMessageComponent mensagem={mensagemModal.mensagem} />
+          )}
+        </ModalComponent>
+      )}
+
       {/* USO DO USERLISTCOMPONENT COM OS DADOS FILTRADOS */}
       {!carregando && !erro && (
-        <UserListComponent users={usuariosFiltrados} />
+        <UserListComponent 
+        users={usuariosFiltrados} 
+        onSelecionarUsuario={buscarUsuarioPorId} 
+        />
       )}
     </div>
   );

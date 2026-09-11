@@ -1,0 +1,18 @@
+function SuccessMessageComponent({ usuario }) {
+  return (
+    <div>
+      <h2>Usuário cadastrado com sucesso</h2>
+      <p>
+        <strong>Nome:</strong> {usuario.name}
+      </p>
+      <p>
+        <strong>Usuário:</strong> {usuario.username}
+      </p>
+      <p>
+        <strong>E-mail:</strong> {usuario.email}
+      </p>
+    </div>
+  );
+}
+
+export default SuccessMessageComponent;

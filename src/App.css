@@ -1,131 +1,467 @@
-/* =========================================================
-   ESTILO PARA O APP.JSX ORIGINAL (SEM MUDAR O CÓDIGO JSX)
-   ========================================================= */
+/* ==========================================================================
+   ULTRA-MODERN INTERACTIVE GLASSMORPHISM STYLESHEET
+   100% Compatível com a estrutura do seu App.jsx sem alterar o código
+   ========================================================================== */
 
-/* Reset global */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA & PALETA DE CORES --- */
+:root {
+  --bg-dark: #090d16;
+  --bg-surface: rgba(18, 25, 41, 0.7);
+  --bg-surface-hover: rgba(30, 41, 67, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(99, 102, 241, 0.4);
+  
+  --primary: #6366f1;
+  --primary-glow: rgba(99, 102, 241, 0.4);
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  
+  --shadow-main: 0 20px 50px -10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.15);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.5);
+  
+  --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- RESET & FUNDO DINÂMICO ILUMINADO --- */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Fundo da página e centralização */
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-  color: #334155;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.25) 0px, transparent 50%),
+    radial-gradient(at 90% 20%, rgba(217, 70, 239, 0.2) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, rgba(6, 182, 212, 0.2) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
   min-height: 100vh;
+  padding: 40px 20px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 3rem 1rem;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* Container principal (a div raiz do App) */
-#root > div,
-body > div {
+/* Efeito de luz flutuante suave */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 60%);
+  animation: floatBackground 15s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes floatBackground {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-3%, 4%) scale(1.05); }
+  100% { transform: translate(4%, -2%) scale(0.98); }
+}
+
+/* --- CONTAINER PRINCIPAL (app-container) --- */
+.app-container {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 480px;
-  background: #ffffff;
-  padding: 2.25rem 2rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08),
-              0 8px 10px -6px rgba(15, 23, 42, 0.04);
-}
-
-/* Título */
-h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0f172a;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
-}
-
-/* Campo de busca (input) */
-input[type='text'] {
-  width: 100%;
-  padding: 0.85rem 1.1rem;
-  font-size: 0.95rem;
-  color: #1e293b;
-  background-color: #f8fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  outline: none;
-  transition: all 0.2s ease;
-  margin-bottom: 1.25rem;
-}
-
-input[type='text']::placeholder {
-  color: #94a3b8;
-}
-
-input[type='text']:focus {
-  background-color: #ffffff;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-}
-
-/* Parágrafos gerais (mensagens de contagem, aviso, erro) */
-p {
-  font-size: 0.875rem;
-  color: #64748b;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-/* Lista de usuários */
-ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--bg-surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-main);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 28px;
+  animation: containerEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Esconde as tags <hr> e <br> originais para transformar em cards limpos */
-ul li hr,
-ul li br {
-  display: none;
+@keyframes containerEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* Card de cada usuário (li) */
-ul li {
+/* --- HEADER COMPONENT --- */
+header, .header-container, div:has(> h1) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+h1, header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h1::before {
+  content: '⚡';
+  -webkit-text-fill-color: initial;
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.6));
+  animation: pulseIcon 2s infinite alternate;
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1) rotate(-5deg); }
+  100% { transform: scale(1.15) rotate(5deg); }
+}
+
+/* Badge de contagem no Header */
+header span, .total-users, header p, .header-badge {
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 6px 16px;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- INPUT DE BUSCA INTERATIVO (search-input) --- */
+.search-input {
+  width: 100%;
+  padding: 18px 24px 18px 52px;
+  background: rgba(10, 15, 26, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 18px center;
+  background-size: 20px 20px;
+}
+
+.search-input::placeholder {
+  color: var(--text-dim);
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  background-color: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 0 4px var(--primary-glow), 0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* --- CARREGAMENTO (LoadingComponent) --- */
+.loading-container, [class*="loading"], [class*="Loading"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+  animation: fadeIn 0.4s ease;
+}
+
+.loading-container::before, [class*="loading"]::before {
+  content: '';
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(99, 102, 241, 0.15);
+  border-top-color: var(--primary);
+  border-right-color: var(--accent-cyan);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- MENSAGEM DE ERRO (error-message) --- */
+.error-message {
+  background: rgba(244, 63, 94, 0.1);
+  border-left: 4px solid var(--accent-rose);
+  border-radius: var(--radius-sm);
+  color: #fca5a5;
+  padding: 16px 20px;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  padding: 0.9rem 1.1rem;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  gap: 12px;
+  backdrop-filter: blur(8px);
+  animation: shake 0.5s ease-in-out;
 }
 
-/* Avatar decorativo em gradiente gerado via CSS */
-ul li::before {
+.error-message::before {
+  content: '⚠️';
+  font-size: 1.2rem;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+/* --- FORMULÁRIO DE CADASTRO (UseForm) --- */
+form, .use-form, .form-container {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+form::before {
   content: '';
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  margin-right: 0.85rem;
-  flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--primary-gradient);
 }
 
-/* Efeito ao passar o mouse no card */
-ul li:hover {
-  transform: translateY(-2px);
-  border-color: #c7d2fe;
-  box-shadow: 0 6px 12px rgba(99, 102, 241, 0.1);
+form:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Nome do usuário */
-ul li strong {
+form input, form select, form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
   font-size: 0.95rem;
-  font-weight: 600;
-  color: #1e293b;
+  font-family: inherit;
+  transition: var(--transition);
+  outline: none;
 }
+
+form input:focus {
+  border-color: var(--primary);
+  background: rgba(2, 6, 23, 0.9);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* Botões Globais & Formulário */
+button, form button, input[type="submit"] {
+  background: var(--primary-gradient);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: inherit;
+  padding: 14px 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+button:hover, form button:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: var(--shadow-glow);
+  filter: brightness(1.1);
+}
+
+button:active, form button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* --- NOVO USUARIO BANNER / CARD --- */
+[class*="NovoUsuario"], .novo-usuario-card {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.9) translateY(-10px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* --- DETALHES DO USUARIO (UserDetailsComponent) --- */
+[class*="UserDetails"], .user-details-card {
+  background: rgba(20, 29, 47, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.25);
+  animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- LISTA DE USUÁRIOS & CARDS (UserListComponent) --- */
+.user-list, [class*="UserList"], .users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cards dentro da lista de usuários */
+.user-list > *, [class*="UserList"] > *, .user-card, .user-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Linha brilhante ao passar o mouse */
+.user-list > *::before, [class*="UserList"] > *::before, .user-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.user-list > *:hover, [class*="UserList"] > *:hover, .user-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  background: var(--bg-surface-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.25);
+}
+
+.user-list > *:hover::before, [class*="UserList"] > *:hover::before, .user-card:hover::before {
+  opacity: 1;
+}
+
+/* Tipografia dos Cards */
+.user-card h3, .user-item h3, .user-list h3, .user-list strong {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.user-card p, .user-item p, .user-list p, .user-list span {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  word-break: break-word;
+}
+
+/* --- SCROLLBAR CUSTOMIZADA --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  border: 2px solid var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* --- ADAPTAÇÃO PARA DISPOSITIVOS MÓVEIS --- */
+@media (max-width: 640px) {
+  body {
+    padding: 16px 10px;
+  }
+  
+  .app-container {
+    padding: 24px 18px;
+    border-radius: var(--radius-md);
+  }
+
+  header, .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-list, [class*="UserList"] {
+    grid-template-columns: 1fr;
+  }
+}
+
+

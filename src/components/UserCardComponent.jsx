@@ -1,4 +1,4 @@
-export default function UserCardComponent({ user }) {
+export default function UserCardComponent({ user, onSelecionarUsuario }) {
   const { name, email, company, website } = user;
 
   return (
@@ -11,6 +11,11 @@ export default function UserCardComponent({ user }) {
         <p className="email">📧 {email}</p>
         {company && <p className="company">🏢 {company.name || company}</p>}
         {website && <p className="website">🌐 {website}</p>}
+
+
+        <button className="details-button" onClick={() => onSelecionarUsuario(user.id)}>
+          Ver Detalhes
+        </button>
       </div>
     </div>
   );
