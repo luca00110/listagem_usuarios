@@ -1,6 +1,6 @@
 function SuccessMessageComponent({ usuario }) {
   return (
-    <div>
+    <div role="status" aria-live="polite">
       <h2>Usuário cadastrado com sucesso</h2>
       <p>
         <strong>Nome:</strong> {usuario.name}

@@ -1,6 +1,6 @@
 import UserCardComponent from './UserCardComponent';
 
-export default function UserListComponent({  users = [], onSelecionarUsuario }) {
+export default function UserListComponent({ users = [], onSelecionarUsuario, onExcluirUsuario }) {
   if (users.length === 0) {
     return <p className="empty-state">Nenhum usuário encontrado.</p>;
   }
@@ -8,7 +8,12 @@ export default function UserListComponent({  users = [], onSelecionarUsuario }) 
   return (
     <div className="user-list">
       {users.map((user) => (
-        <UserCardComponent key={user.id} user={user} onSelecionarUsuario={onSelecionarUsuario} />
+        <UserCardComponent
+          key={user.id}
+          user={user}
+          onSelecionarUsuario={onSelecionarUsuario}
+          onExcluirUsuario={onExcluirUsuario}
+        />
       ))}
     </div>
   );

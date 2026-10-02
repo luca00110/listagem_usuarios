@@ -5,10 +5,11 @@ import HeaderComponent from './components/HeaderComponent';
 import LoadingComponent from './components/LoadingComponent';
 import UserListComponent from './components/UserListComponent';
 import UserDetailsComponent from './components/UserDetailsComponent';
-import UseForm from './components/UseForm';
+import NovoUsuarioComponent from './components/NovoUsuarioComponent';
 import ModalComponent from './components/ModalComponent';
 import SuccessMessageComponent from './components/SuccessMessageComponent';
 import ErrorMessageComponent from './components/ErrorMessageComponent';
+import UseFormComponent from './components/UseFormComponents';
 
 const filtrarUsuariosPorTermo = (termo) => (usuario) => {
   const termoLower = termo.toLowerCase();
@@ -28,6 +29,9 @@ function App() {
   const [busca, setBusca] = useState('');
   const [usuarioSelecionado, setUsuarioSelecionado] = useState(null);
   const [mensagemModal, setMensagemModal] = useState(null);
+  const [novoUsuario, setNovoUsuario] = useState(null);
+  const [modalNovoUsuarioAberto, setModalNovoUsuarioAberto] = useState(false);
+  
 
   
 
@@ -69,6 +73,9 @@ function App() {
         `${url}/users`, user
       )
       const data = resposta.data
+      setNovoUsuario(data)
+      setUsuarios([...usuarios, data])
+      setModalNovoUsuarioAberto(false)
       setMensagemModal({
         tipo: 'sucesso',
         usuario: data,
@@ -82,13 +89,25 @@ function App() {
     }
   }
 
+  async function excluirUsuario(id) {
+    try {
+      await axios.delete(`${url}/users/${id}`);
+      setUsuarios((usuariosAtuais) => usuariosAtuais.filter((usuario) => usuario.id !== id));
+      if (usuarioSelecionado?.id === id) setUsuarioSelecionado(null);
+      if (novoUsuario?.id === id) setNovoUsuario(null);
+    } catch (error) {
+      setMensagemModal({
+        tipo: 'erro',
+        mensagem: `Não foi possível excluir o usuário. Código: ${error.message}`,
+      });
+    }
+  }
+
   function fecharMensagemModal() {
     setMensagemModal(null);
   }
     
   
-
-
 
   useEffect(() => {
     buscarUsuarios();
@@ -101,6 +120,11 @@ function App() {
         title="Listagem de Usuários" 
         totalUsers={usuariosFiltrados.length} 
       />
+
+      <button className='botao-novo-usuario'
+        type="button"
+        onClick={() => setModalNovoUsuarioAberto(true)} 
+      >Cadastrar novo usuário</button>
 
       <input 
         type="text"
@@ -127,10 +151,11 @@ function App() {
          />
       )}
 
-      <UseForm onCadastrar={cadastrarUsuario}/>
-
       {mensagemModal && (
-        <ModalComponent onFechar={fecharMensagemModal}>
+        <ModalComponent
+          onFechar={fecharMensagemModal}
+          className={mensagemModal.tipo === 'sucesso' ? 'success-notification' : undefined}
+        >
           {mensagemModal.tipo === 'sucesso' ? (
             <SuccessMessageComponent usuario={mensagemModal.usuario} />
           ) : (
@@ -144,8 +169,25 @@ function App() {
         <UserListComponent 
         users={usuariosFiltrados} 
         onSelecionarUsuario={buscarUsuarioPorId} 
+        onExcluirUsuario={excluirUsuario}
         />
       )}
+
+      {modalNovoUsuarioAberto && (
+        <ModalComponent
+        className="new-user-modal"
+        titulo="Novo Usuário"
+        onFechar={() => setModalNovoUsuarioAberto(false)}
+        >
+          <UseFormComponent onCadastrar={cadastrarUsuario} />
+        </ModalComponent>
+      )}
+
+      {novoUsuario && (
+        <NovoUsuarioComponent novoUsuario={novoUsuario}/>
+      )}
+
+
     </div>
   );
 }

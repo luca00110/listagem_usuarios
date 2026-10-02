@@ -1,6 +1,6 @@
-function ModalComponent({ children, onFechar }) {
+function ModalComponent({ children, onFechar, className }) {
   return (
-    <dialog open aria-modal="true">
+    <dialog className={className} open aria-modal="true">
       <button type="button" onClick={onFechar} aria-label="Fechar modal">
         Fechar
       </button>

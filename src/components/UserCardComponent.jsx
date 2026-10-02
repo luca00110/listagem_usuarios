@@ -1,4 +1,4 @@
-export default function UserCardComponent({ user, onSelecionarUsuario }) {
+export default function UserCardComponent({ user, onSelecionarUsuario, onExcluirUsuario }) {
   const { name, email, company, website } = user;
 
   return (
@@ -13,9 +13,22 @@ export default function UserCardComponent({ user, onSelecionarUsuario }) {
         {website && <p className="website">🌐 {website}</p>}
 
 
-        <button className="details-button" onClick={() => onSelecionarUsuario(user.id)}>
-          Ver Detalhes
-        </button>
+        <div className="user-card__actions">
+          <button className="details-button" onClick={() => onSelecionarUsuario(user.id)}>
+            Ver Detalhes
+          </button>
+          <button
+            className="user-card__delete-button"
+            type="button"
+            onClick={() => {
+              if (window.confirm(`Deseja excluir ${name}?`)) {
+                onExcluirUsuario(user.id);
+              }
+            }}
+          >
+            Excluir
+          </button>
+        </div>
       </div>
     </div>
   );
